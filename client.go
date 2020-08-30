@@ -447,6 +447,14 @@ func (mb *client) send(request *ProtocolDataUnit) (response *ProtocolDataUnit, e
 	if err = mb.packager.Verify(aduRequest, aduResponse); err != nil {
 		return
 	}
+	
+	// lg007: the following code cancels echo with AutoDirection on 
+	// Maxim MAX13487E/MAX13488E
+        if bytes.Equal(aduRequest, aduResponse[:len(aduRequest)]) {
+          aduResponse = aduResponse[len(aduRequest):]
+        }
+	// lg007: code ends
+	
 	response, err = mb.packager.Decode(aduResponse)
 	if err != nil {
 		return
