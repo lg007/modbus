@@ -7,6 +7,7 @@ package modbus
 import (
 	"encoding/binary"
 	"fmt"
+	"bytes"
 )
 
 // ClientHandler is the interface that groups the Packager and Transporter methods.
